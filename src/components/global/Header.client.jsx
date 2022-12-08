@@ -1,14 +1,13 @@
-import {Link, useUrl, useCart} from '@shopify/hydrogen';
+// HEADER COMPONENT
+// the header component has pre-built parts
+// TO-DO: remove dependency of Shopify API queries and customize
+// TO-KEEP: cart! account! mobile version of header!
+
+import {Image, Link, useUrl, useCart} from '@shopify/hydrogen';
 import {useWindowScroll} from 'react-use';
 
-import {
-  Heading,
-  IconAccount,
-  IconBag,
-  IconMenu,
-  IconSearch,
-  Input,
-} from '~/components';
+import {IconAccount, IconBag, IconMenu, IconSearch, Input} from '~/components';
+import logo from '../../assets/images/logo/logo.png';
 
 import {CartDrawer} from './CartDrawer.client';
 import {MenuDrawer} from './MenuDrawer.client';
@@ -17,10 +16,12 @@ import {useDrawer} from './Drawer.client';
 /**
  * A client component that specifies the content of the header on the website
  */
+
 export function Header({title, menu}) {
   const {pathname} = useUrl();
 
   const localeMatch = /^\/([a-z]{2})(\/|$)/i.exec(pathname);
+
   const countryCode = localeMatch ? localeMatch[1] : undefined;
 
   const isHome = pathname === `/${countryCode ? countryCode + '/' : ''}`;
@@ -59,7 +60,7 @@ export function Header({title, menu}) {
   );
 }
 
-function MobileHeader({countryCode, title, isHome, openCart, openMenu}) {
+function MobileHeader({countryCode, isHome, openCart, openMenu}) {
   const {y} = useWindowScroll();
 
   const styles = {
@@ -101,12 +102,15 @@ function MobileHeader({countryCode, title, isHome, openCart, openMenu}) {
       </div>
 
       <Link
-        className="flex items-center self-stretch leading-[3rem] md:leading-[4rem] justify-center flex-grow w-full h-full"
+        className="flex items-center md:leading-[4rem] justify-center flex-grow w-full h-full"
         to="/"
       >
-        <Heading className="font-bold text-center" as={isHome ? 'h1' : 'h2'}>
-          {title}
-        </Heading>
+        <Image
+          src={logo}
+          width={120}
+          height={50}
+          alt="digital garden header logo"
+        />
       </Link>
 
       <div className="flex items-center justify-end w-full gap-4">
@@ -139,14 +143,19 @@ function DesktopHeader({countryCode, isHome, menu, openCart, title}) {
 
   return (
     <header role="banner" className={styles.container}>
-      <div className="flex gap-12">
-        <Link className={`font-bold`} to="/">
+      <div className="flex ">
+        <Link className={`font-bold mr-10`} to="/">
           {title}
         </Link>
-        <nav className="flex gap-8">
+        <nav>
           {/* Top level menu items */}
           {(menu?.items || []).map((item) => (
-            <Link key={item.id} to={item.to} target={item.target}>
+            <Link
+              className="mr-10"
+              key={item.id}
+              to={item.to}
+              target={item.target}
+            >
               {item.title}
             </Link>
           ))}
