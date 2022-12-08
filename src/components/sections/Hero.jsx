@@ -1,3 +1,5 @@
+// HERO is rendered 3 times
+
 import {Image, Link, Video} from '@shopify/hydrogen';
 
 import {Heading, Text} from '~/components';
@@ -45,6 +47,7 @@ export function Hero({
               />
             </div>
           )}
+
           {spreadSecondary?.reference && (
             <div className="hidden md:block">
               <SpreadMedia
