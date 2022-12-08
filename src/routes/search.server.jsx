@@ -47,6 +47,9 @@ export default function Search({pageBy = PAGINATION_SIZE, params}) {
   const products = data?.products;
   const noResults = products?.nodes?.length === 0;
 
+  // search page has search term as default value
+  // search page built with SearchPage.server.jsx component and
+  // Input.jsx element component
   if (!searchTerm || noResults) {
     return (
       <SearchPage searchTerm={searchTerm ? decodeURI(searchTerm) : null}>

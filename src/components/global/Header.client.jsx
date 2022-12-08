@@ -126,7 +126,7 @@ function MobileHeader({countryCode, isHome, openCart, openMenu}) {
   );
 }
 
-function DesktopHeader({countryCode, isHome, menu, openCart, title}) {
+function DesktopHeader({countryCode, isHome, menu, openCart}) {
   const {y} = useWindowScroll();
 
   const styles = {
@@ -143,11 +143,16 @@ function DesktopHeader({countryCode, isHome, menu, openCart, title}) {
 
   return (
     <header role="banner" className={styles.container}>
-      <div className="flex ">
+      <div className="flex">
         <Link className={`font-bold mr-10`} to="/">
-          {title}
+          <Image
+            src={logo}
+            width={120}
+            height={50}
+            alt="digital garden header logo"
+          />
         </Link>
-        <nav>
+        <nav className="flex items-center">
           {/* Top level menu items */}
           {(menu?.items || []).map((item) => (
             <Link
