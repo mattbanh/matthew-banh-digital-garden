@@ -17,6 +17,7 @@ import {
   useLocalization,
   gql,
 } from '@shopify/hydrogen';
+import axios from 'axios';
 
 import {Layout} from '~/components/index.server';
 import {Section} from '../../components/index';
@@ -29,8 +30,42 @@ export default function AddProduct() {
       <Section>
         <h1 className="font-bold text-4xl">Add Product</h1>
         <AddProductForm />
+        <TestQuery />
       </Section>
     </Layout>
+  );
+}
+
+function postThis() {
+  axios.post(
+    'https://hydrogenappyo.myshopify.com/admin/api/2022-10/products.json',
+    {
+      product: {
+        title: 'Toy2',
+        body_html: 'The best best product',
+        vendor: 'Matt',
+      },
+    },
+    {
+      headers: {
+        'X-Shopify-Access-Token': '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',
+      },
+    },
+  );
+}
+
+function TestQuery() {
+  const {data} = useShopQuery({
+    query: PRODUCTS,
+  });
+  postThis();
+  return (
+    <div>
+      <h1>hi</h1>
+      {data.products.nodes.map((product) => (
+        <h1 key={product.id}>{product.id}</h1>
+      ))}
+    </div>
   );
 }
 
@@ -56,6 +91,7 @@ function AddProductForm() {
 
   return (
     <>
+      <div>{data ? <h1>hi</h1> : <h1>no</h1>}</div>
       <form className="w-full">
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -218,6 +254,38 @@ const CUSTOMER_QUERY = gql`
     customer(customerAccessToken: $customerAccessToken) {
       firstName
       lastName
+    }
+  }
+`;
+
+const PRODUCTS = gql`
+  query AllProducts {
+    products(first: 2) {
+      nodes {
+        id
+        title
+        publishedAt
+        handle
+        variants(first: 1) {
+          nodes {
+            id
+            image {
+              url
+              altText
+              width
+              height
+            }
+            priceV2 {
+              amount
+              currencyCode
+            }
+            compareAtPriceV2 {
+              amount
+              currencyCode
+            }
+          }
+        }
+      }
     }
   }
 `;
