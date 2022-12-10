@@ -1,6 +1,10 @@
 // import React, {useState} from 'react';
-import axios from 'axios';
+import {useNavigate} from '@shopify/hydrogen';
+// import {AddProductSuccess} from './AddProductSuccess.server';
+
 export function AddProductForm({data}) {
+  // const [isSubmitted, setIsSubmitted] = useState(false);
+  const navigate = useNavigate();
   // // const [isError, setIsError] = useState(false);
   // const formValidation = (event) => {
   //   const {name, description, price} = event.target;
@@ -11,9 +15,15 @@ export function AddProductForm({data}) {
   //   return true;
   // };
   // function addProduct() {
-
+  const onSubmit = (event) => {
+    event.preventDefault();
+    // console.log(event.target.description.value);
+    navigate('/add-product/submit', {state: {id: 7, color: 'green'}});
+    // setIsSubmitted(true);
+  };
+  // if (!isSubmitted) {
   return (
-    <form action="/add-product" className="w-full max-w-6xl">
+    <form onSubmit={onSubmit} className="w-full max-w-6xl">
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label
@@ -94,4 +104,7 @@ export function AddProductForm({data}) {
       <button type="submit">Click Me</button>
     </form>
   );
+  // } else {
+  //   return <AddProductSuccess />;
+  // }
 }

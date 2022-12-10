@@ -20,7 +20,7 @@ import {
 
 import {Layout} from '~/components/index.server';
 import {Section} from '../../components/index';
-import {AddProductForm} from '../../components/sections/AddProductForm.server';
+import {AddProductForm} from '../../components/sections/AddProductForm.client';
 
 export default function AddProduct() {
   // if (!customerAccessToken) return response.redirect('/account/login');
@@ -38,6 +38,18 @@ export default function AddProduct() {
   );
 }
 
+export async function api(request) {
+  const data = await request.formData();
+  const productName = data.get('name');
+  const productDescription = data.get('description');
+  const productPrice = data.get('price');
+
+  return (
+    <h1>
+      {productName} {productDescription} {productPrice}
+    </h1>
+  );
+}
 function AddProductFormComp() {
   const {customerAccessToken} = useSession();
 
