@@ -62,6 +62,10 @@ export async function api(request, {params, queryShop}) {
   const country = url.searchParams.get('country');
   const {handle} = params;
 
+  // function that helps you query Storefront API within API routes
+  // API route version of useShopQuery
+  // Accepts single argument object with following properties:
+  // query*, variables, locale
   return await queryShop({
     query: PAGINATE_ALL_PRODUCTS_QUERY,
     variables: {

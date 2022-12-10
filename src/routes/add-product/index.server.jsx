@@ -18,11 +18,9 @@ import {
   gql,
 } from '@shopify/hydrogen';
 
-import axios from 'axios';
-
 import {Layout} from '~/components/index.server';
 import {Section} from '../../components/index';
-import {AddProductForm} from '../../components/sections/AddProductForm.client';
+import {AddProductForm} from '../../components/sections/AddProductForm.server';
 
 export default function AddProduct() {
   // if (!customerAccessToken) return response.redirect('/account/login');
@@ -31,7 +29,9 @@ export default function AddProduct() {
     <Layout>
       <Section>
         <h1 className="font-bold text-4xl">Add Product</h1>
+
         <AddProductFormComp />
+
         {/* <TestQuery /> */}
       </Section>
     </Layout>
@@ -55,26 +55,8 @@ function AddProductFormComp() {
     cache: CacheNone(),
   });
 
-  return <AddProductForm data={customerAccessToken} />;
+  return <AddProductForm data={data} />;
 }
-
-// function postThis() {
-//   axios.post(
-//     'https://hydrogenappyo.myshopify.com/admin/api/2022-10/products.json',
-//     {
-//       product: {
-//         title: 'Toy2',
-//         body_html: 'The best best product',
-//         vendor: 'Matt',
-//       },
-//     },
-//     {
-//       headers: {
-//         'X-Shopify-Access-Token': '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',
-//       },
-//     },
-//   );
-// }
 
 // function TestQuery() {
 //   const {data} = useShopQuery({
