@@ -3,7 +3,7 @@
 // because this is a one-off project, this project will not query for everything
 // from the Shopify backend but rather be treated as a custom React project
 
-// import {Suspense} from 'react';
+import {Suspense} from 'react';
 // import {
 //   CacheLong,
 //   gql,
@@ -29,12 +29,15 @@ export default function Homepage() {
         {/* <Suspense> */}
         {/* <SeoForHomepage /> */}
         {/* </Suspense> */}
-        {/* <Suspense> */}
-        {/* <HomepageContent /> */}
-        {/* </Suspense> */}
+        <Suspense>
+          <HomepageContent />
+        </Suspense>
       </Section>
     </Layout>
   );
+}
+function HomepageContent() {
+  return <h2>test</h2>;
 }
 
 // function HomepageContent() {

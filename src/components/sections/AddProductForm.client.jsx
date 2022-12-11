@@ -2,7 +2,7 @@
 import {useNavigate} from '@shopify/hydrogen';
 // import {AddProductSuccess} from './AddProductSuccess.server';
 
-export function AddProductForm({data}) {
+export function AddProductForm() {
   // const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
   // // const [isError, setIsError] = useState(false);

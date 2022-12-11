@@ -20,6 +20,7 @@ module.exports = {
         notice: withOpacityValue('--color-accent'),
         shopPay: 'var(--color-shop-pay)',
       },
+      // 512px, 768px, 1024px, 1280px, 1536px
       screens: {
         sm: '32em',
         md: '48em',
