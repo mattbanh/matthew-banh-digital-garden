@@ -51,23 +51,23 @@ export async function api(request) {
   );
 }
 function AddProductFormComp() {
-  const {customerAccessToken} = useSession();
+  // const {customerAccessToken} = useSession();
 
-  const {
-    language: {isoCode: languageCode},
-    country: {isoCode: countryCode},
-  } = useLocalization();
-  const {data} = useShopQuery({
-    query: CUSTOMER_QUERY,
-    variables: {
-      customerAccessToken,
-      language: languageCode,
-      country: countryCode,
-    },
-    cache: CacheNone(),
-  });
+  // const {
+  //   language: {isoCode: languageCode},
+  //   country: {isoCode: countryCode},
+  // } = useLocalization();
+  // const {data} = useShopQuery({
+  //   query: CUSTOMER_QUERY,
+  //   variables: {
+  //     customerAccessToken,
+  //     language: languageCode,
+  //     country: countryCode,
+  //   },
+  //   cache: CacheNone(),
+  // });
 
-  return <AddProductForm data={data} />;
+  return <AddProductForm />;
 }
 
 // function TestQuery() {
