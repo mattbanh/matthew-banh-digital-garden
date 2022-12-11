@@ -19,17 +19,20 @@
 // import {FeaturedCollections, Hero} from '~/components';
 // import {Layout, ProductSwimlane} from '~/components/index.server';
 import {Layout} from '~/components/index.server';
+import {Section} from '../components/index';
 
 export default function Homepage() {
   return (
     <Layout>
-      <h1>The beginning of my layout</h1>
-      {/* <Suspense> */}
-      {/* <SeoForHomepage /> */}
-      {/* </Suspense> */}
-      {/* <Suspense> */}
-      {/* <HomepageContent /> */}
-      {/* </Suspense> */}
+      <Section>
+        <h1>The beginning of my layout</h1>
+        {/* <Suspense> */}
+        {/* <SeoForHomepage /> */}
+        {/* </Suspense> */}
+        {/* <Suspense> */}
+        {/* <HomepageContent /> */}
+        {/* </Suspense> */}
+      </Section>
     </Layout>
   );
 }
