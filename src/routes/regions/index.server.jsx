@@ -44,19 +44,25 @@ function CollectionGrid() {
 
   useServerAnalytics({
     shopify: {
-      canonicalPath: '/collections',
+      canonicalPath: '/regions',
       pageType: ShopifyAnalyticsConstants.pageType.listCollections,
     },
   });
 
+  // an "All" collection was created on Shopify Storefront to allow filtering
+  // products by tag. To prevent the "All" collection from being shown, it was filtered
+  // out of the graphQL query result
   const collections = data.collections.nodes;
+  const regions = collections.filter(
+    (collection) => collection.title !== 'All',
+  );
 
   return (
-    <Grid items={collections.length === 3 ? 3 : 2}>
-      {collections.map((collection, i) => (
+    <Grid items={regions.length === 3 ? 3 : 2}>
+      {regions.map((region, i) => (
         <CollectionCard
-          collection={collection}
-          key={collection.id}
+          collection={region}
+          key={region.id}
           loading={getImageLoadingPriority(i, 2)}
         />
       ))}
