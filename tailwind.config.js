@@ -23,7 +23,7 @@ module.exports = {
         'garden-teal': '#67BBBF',
         'garden-rose': '#F2BAC9',
         'garden-yellow': '#F2C90B',
-        'garden-cream': '#FEF9F4',
+        'garden-cream': '#F2f2f2',
       },
       // 512px, 768px, 1024px, 1280px, 1536px
       screens: {

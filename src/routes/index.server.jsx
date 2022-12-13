@@ -2,7 +2,7 @@
 // Hydrogen allows building templates that can be added as a Shopify app
 // because this is a one-off project, this project will not query for everything
 // from the Shopify backend but rather be treated as a custom React project
-import clsx from 'clsx';
+// import clsx from 'clsx';
 import {Suspense} from 'react';
 import {
   CacheLong,
@@ -54,13 +54,13 @@ function HomepageContent() {
 
   return (
     <>
-      <Section className="bg-garden-teal min-h-screen">
+      <Section className="bg-garden-teal min-h-[75vh]">
         <ShopByRegion className="max-w-[1280px]" />
       </Section>
-      <Section className="bg-garden-cream min-h-screen flex items-center">
+      <Section className="bg-garden-cream min-h-[75vh] flex items-center">
         <FeaturedProducts products={products.nodes} />
       </Section>
-      <Section className="bg-blue-300 min-h-[720px]">
+      <Section className="bg-blue-300 min-h-[75vh]">
         <HomepageAbout />
       </Section>
       {/* <FeaturedCollections

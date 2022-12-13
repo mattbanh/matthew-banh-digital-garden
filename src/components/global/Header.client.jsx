@@ -128,7 +128,7 @@ function DesktopHeader({countryCode, isHome, menu, openCart}) {
   const styles = {
     button:
       'relative flex items-center justify-center w-8 h-8 focus:ring-primary/5',
-    container: `${'bg-contrast/80 text-primary max-w-[1440px] mx-auto flex justify-between'} ${
+    container: `${'bg-contrast/80 text-primaryflex justify-between'} ${
       y > 50 && !isHome ? 'shadow-lightHeader ' : ''
     }hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-8 px-12 py-8`,
   };

@@ -5,8 +5,7 @@ import map from '../../assets/images/map-of-japan.png';
 // SHOPBYREGION SECTION
 export function ShopByRegion() {
   return (
-    // <Section>
-    <section className="flex flex-col gap-8 md:flex-row">
+    <section className="flex flex-col gap-8 max-w-[1440px] md:mx-auto md:flex-row ">
       <div className="md:w-1/2 flex flex-col justify-center">
         <h2 className="text-center text-xl text-garden-cream font-bold mb-8 md:text-4xl md:mb-12">
           Shop by Region
@@ -63,6 +62,5 @@ export function ShopByRegion() {
         </div>
       </div>
     </section>
-    // </Section>
   );
 }
