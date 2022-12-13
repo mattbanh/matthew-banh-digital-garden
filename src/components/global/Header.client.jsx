@@ -65,11 +65,7 @@ function MobileHeader({countryCode, isHome, openCart, openMenu}) {
 
   const styles = {
     button: 'relative flex items-center justify-center w-8 h-8',
-    container: `${
-      isHome
-        ? 'bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader'
-        : 'bg-contrast/80 text-primary'
-    } ${
+    container: `${'bg-contrast/80 text-primary'} ${
       y > 50 && !isHome ? 'shadow-lightHeader ' : ''
     }flex lg:hidden items-center h-nav sticky backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-4 px-4 md:px-8`,
   };
@@ -132,40 +128,35 @@ function DesktopHeader({countryCode, isHome, menu, openCart}) {
   const styles = {
     button:
       'relative flex items-center justify-center w-8 h-8 focus:ring-primary/5',
-    container: `${
-      isHome
-        ? 'bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader'
-        : 'bg-contrast/80 text-primary'
-    } ${
+    container: `${'bg-contrast/80 text-primary max-w-[1440px] mx-auto flex justify-between'} ${
       y > 50 && !isHome ? 'shadow-lightHeader ' : ''
     }hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-8 px-12 py-8`,
   };
 
   return (
     <header role="banner" className={styles.container}>
-      <div className="flex">
-        <Link className={`font-bold mr-10`} to="/">
-          <Image
-            src={logo}
-            width={120}
-            height={50}
-            alt="digital garden header logo"
-          />
-        </Link>
-        <nav className="flex items-center">
-          {/* Top level menu items */}
-          {(menu?.items || []).map((item) => (
-            <Link
-              className="mr-10"
-              key={item.id}
-              to={item.to}
-              target={item.target}
-            >
-              {item.title}
-            </Link>
-          ))}
-        </nav>
-      </div>
+      <Link className={`font-bold mr-10`} to="/">
+        <Image
+          src={logo}
+          width={120}
+          height={50}
+          alt="digital garden header logo"
+        />
+      </Link>
+      <nav className="flex items-center">
+        {/* Top level menu items */}
+        {(menu?.items || []).map((item) => (
+          <Link
+            className="mr-10"
+            key={item.id}
+            to={item.to}
+            target={item.target}
+          >
+            {item.title}
+          </Link>
+        ))}
+      </nav>
+
       <div className="flex items-center gap-1">
         <form
           action={`/${countryCode ? countryCode + '/' : ''}search`}
