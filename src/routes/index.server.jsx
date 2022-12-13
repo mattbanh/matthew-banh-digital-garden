@@ -25,7 +25,7 @@ export default function Homepage() {
   return (
     <Layout>
       <Section>
-        <h1 className="text-center h-[50vh]">HERO</h1>
+        <h1 className="text-center h-screen">HERO</h1>
         <Suspense>
           <SeoForHomepage />
         </Suspense>
@@ -54,16 +54,39 @@ function HomepageContent() {
 
   return (
     <>
-      <Section>
-        <ShopByRegion />
+      <Section className="bg-garden-teal min-h-screen">
+        <ShopByRegion className="max-w-[1280px]" />
       </Section>
-      <Section>
+      <Section className="bg-garden-cream min-h-screen flex items-center">
         <FeaturedProducts products={products.nodes} />
+      </Section>
+      <Section className="bg-blue-300 min-h-[720px]">
+        <HomepageAbout />
       </Section>
       {/* <FeaturedCollections
         data={featuredCollections.nodes}
         title="Collections"
       /> */}
+    </>
+  );
+}
+
+function HomepageAbout() {
+  return (
+    <>
+      <div className="md:flex justify-between w-full h-screen">
+        <div>
+          <h3>WHY DIGITAL GARDEN</h3>
+        </div>
+        <div>
+          <div className="md:sticky top-40">
+            <span>TEST</span>
+          </div>
+        </div>
+        <div>
+          <h3>MORE ABOUT US</h3>
+        </div>
+      </div>
     </>
   );
 }
@@ -91,7 +114,7 @@ function SeoForHomepage() {
   );
 }
 
-// GRAPHQL QUERIES
+// ABOUT GRAPHQL QUERIES
 // gql is a utility that adds syntax highlighting to GraphQL queries
 // following is {operation type} {operation name}
 // operation type is any of the following:

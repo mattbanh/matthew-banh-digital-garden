@@ -135,11 +135,11 @@ function DesktopHeader({countryCode, isHome, menu, openCart}) {
 
   return (
     <header role="banner" className={styles.container}>
-      <Link className={`font-bold mr-10`} to="/">
+      <Link className={`font-bold mr-10 min-w-[285px]`} to="/">
         <Image
           src={logo}
-          width={120}
-          height={50}
+          width={140}
+          height={60}
           alt="digital garden header logo"
         />
       </Link>

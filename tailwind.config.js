@@ -19,6 +19,11 @@ module.exports = {
         contrast: withOpacityValue('--color-contrast'),
         notice: withOpacityValue('--color-accent'),
         shopPay: 'var(--color-shop-pay)',
+        'garden-indigo': '#1E1E61',
+        'garden-teal': '#67BBBF',
+        'garden-rose': '#F2BAC9',
+        'garden-yellow': '#F2C90B',
+        'garden-cream': '#FEF9F4',
       },
       // 512px, 768px, 1024px, 1280px, 1536px
       screens: {
