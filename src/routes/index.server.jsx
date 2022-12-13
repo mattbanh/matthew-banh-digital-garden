@@ -2,187 +2,179 @@
 // Hydrogen allows building templates that can be added as a Shopify app
 // because this is a one-off project, this project will not query for everything
 // from the Shopify backend but rather be treated as a custom React project
-
-// import {Suspense} from 'react';
-// import {
-//   CacheLong,
-//   gql,
-//   Seo,
-//   ShopifyAnalyticsConstants,
-//   useServerAnalytics,
-//   useLocalization,
-//   useShopQuery,
-// } from '@shopify/hydrogen';
+// import clsx from 'clsx';
+import {Suspense} from 'react';
+import {
+  CacheLong,
+  gql,
+  Seo,
+  // ShopifyAnalyticsConstants,
+  // useServerAnalytics,
+  useLocalization,
+  useShopQuery,
+} from '@shopify/hydrogen';
 
 // import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/lib/fragments';
 // import {getHeroPlaceholder} from '~/lib/placeholders';
-// import {FeaturedCollections, Hero} from '~/components';
-// import {Layout, ProductSwimlane} from '~/components/index.server';
+
 import {Layout} from '~/components/index.server';
-import {Section} from '../components/index';
+
+import {Section, ShopByRegion, FeaturedProducts} from '../components/index';
 
 export default function Homepage() {
   return (
     <Layout>
       <Section>
-        <h1>The beginning of my layout</h1>
-        {/* <Suspense> */}
-        {/* <SeoForHomepage /> */}
-        {/* </Suspense> */}
-        {/* <Suspense> */}
-        {/* <HomepageContent /> */}
-        {/* </Suspense> */}
+        <h1 className="text-center h-screen">HERO</h1>
+        <Suspense>
+          <SeoForHomepage />
+        </Suspense>
       </Section>
+      <Suspense>
+        <HomepageContent />
+      </Suspense>
     </Layout>
   );
 }
+function HomepageContent() {
+  const {
+    language: {isoCode: languageCode},
+    country: {isoCode: countryCode},
+  } = useLocalization();
 
-// function HomepageContent() {
-//   const {
-//     language: {isoCode: languageCode},
-//     country: {isoCode: countryCode},
-//   } = useLocalization();
+  const {data} = useShopQuery({
+    query: FEATURED_PRODUCTS,
+    variables: {
+      language: languageCode,
+      country: countryCode,
+    },
+    preload: true,
+  });
+  const {products} = data;
 
-//   const {data} = useShopQuery({
-//     query: HOMEPAGE_CONTENT_QUERY,
-//     variables: {
-//       language: languageCode,
-//       country: countryCode,
-//     },
-//     preload: true,
-//   });
+  return (
+    <>
+      <Section className="bg-garden-teal min-h-[75vh]">
+        <ShopByRegion className="max-w-[1280px]" />
+      </Section>
+      <Section className="bg-garden-cream min-h-[75vh] flex items-center">
+        <FeaturedProducts products={products.nodes} />
+      </Section>
+      <Section className="bg-blue-300 min-h-[75vh]">
+        <HomepageAbout />
+      </Section>
+      {/* <FeaturedCollections
+        data={featuredCollections.nodes}
+        title="Collections"
+      /> */}
+    </>
+  );
+}
 
-//   const {heroBanners, featuredCollections, featuredProducts} = data;
+function HomepageAbout() {
+  return (
+    <>
+      <div className="md:flex justify-between w-full h-screen">
+        <div>
+          <h3>WHY DIGITAL GARDEN</h3>
+        </div>
+        <div>
+          <div className="md:sticky top-40">
+            <span>TEST</span>
+          </div>
+        </div>
+        <div>
+          <h3>MORE ABOUT US</h3>
+        </div>
+      </div>
+    </>
+  );
+}
 
-//   // fill in the hero banners with placeholders if they're missing
-//   const [primaryHero, secondaryHero, tertiaryHero] = getHeroPlaceholder(
-//     heroBanners.nodes,
-//   );
+function SeoForHomepage() {
+  const {
+    data: {
+      shop: {name, description},
+    },
+  } = useShopQuery({
+    query: HOMEPAGE_SEO_QUERY,
+    cache: CacheLong(),
+    preload: true,
+  });
 
-//   return (
-//     <>
-//       {primaryHero && (
-//         <Hero {...primaryHero} height="full" top loading="eager" />
-//       )}
+  return (
+    <Seo
+      type="homepage"
+      data={{
+        title: name,
+        description,
+        titleTemplate: '%s · Powered by Hydrogen',
+      }}
+    />
+  );
+}
 
-//       <ProductSwimlane
-//         data={featuredProducts.nodes}
-//         title="Featured Products"
-//         divider="bottom"
-//       />
-//       {secondaryHero && <Hero {...secondaryHero} />}
-//       <FeaturedCollections
-//         data={featuredCollections.nodes}
-//         title="Collections"
-//       />
-//       {tertiaryHero && <Hero {...tertiaryHero} />}
-//     </>
-//   );
-// }
+// ABOUT GRAPHQL QUERIES
+// gql is a utility that adds syntax highlighting to GraphQL queries
+// following is {operation type} {operation name}
+// operation type is any of the following:
+// - query(read), mutation(create, update, delete), or subscription (long-lasting read which allows real time updates)
+// operation name is not required unless there are multiple operations, however it is best practice to include it
+const FEATURED_PRODUCTS = gql`
+  query featuredProducts {
+    products(first: 3) {
+      nodes {
+        id
+        title
+        publishedAt
+        handle
+        variants(first: 1) {
+          nodes {
+            id
+            image {
+              url
+              altText
+              width
+              height
+            }
+            priceV2 {
+              amount
+              currencyCode
+            }
+            compareAtPriceV2 {
+              amount
+              currencyCode
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
-// function SeoForHomepage() {
-//   const {
-//     data: {
-//       shop: {name, description},
-//     },
-//   } = useShopQuery({
-//     query: HOMEPAGE_SEO_QUERY,
-//     cache: CacheLong(),
-//     preload: true,
-//   });
+// featuredCollections: collections(
+//   first: 4
 
-//   return (
-//     <Seo
-//       type="homepage"
-//       data={{
-//         title: name,
-//         description,
-//         titleTemplate: '%s · Powered by Hydrogen',
-//       }}
-//     />
-//   );
-// }
-
-// /**
-//  * The homepage content query includes a request for custom metafields inside the alias
-//  * `heroBanners`. The template loads placeholder content if these metafields don't
-//  * exist. Define the following five custom metafields on your Shopify store to override placeholders:
-//  * - hero.title             Single line text
-//  * - hero.byline            Single line text
-//  * - hero.cta               Single line text
-//  * - hero.spread            File
-//  * - hero.spread_secondary  File
-//  *
-//  * @see https://help.shopify.com/manual/metafields/metafield-definitions/creating-custom-metafield-definitions
-//  * @see https://github.com/Shopify/hydrogen/discussions/1790
-//  */
-
-// const HOMEPAGE_CONTENT_QUERY = gql`
-//   ${MEDIA_FRAGMENT}
-//   ${PRODUCT_CARD_FRAGMENT}
-//   query homepage($country: CountryCode, $language: LanguageCode)
-//   @inContext(country: $country, language: $language) {
-//     heroBanners: collections(
-//       first: 3
-//       query: "collection_type:custom"
-//       sortKey: UPDATED_AT
-//     ) {
-//       nodes {
-//         id
-//         handle
-//         title
-//         descriptionHtml
-//         heading: metafield(namespace: "hero", key: "title") {
-//           value
-//         }
-//         byline: metafield(namespace: "hero", key: "byline") {
-//           value
-//         }
-//         cta: metafield(namespace: "hero", key: "cta") {
-//           value
-//         }
-//         spread: metafield(namespace: "hero", key: "spread") {
-//           reference {
-//             ...Media
-//           }
-//         }
-//         spreadSecondary: metafield(namespace: "hero", key: "spread_secondary") {
-//           reference {
-//             ...Media
-//           }
-//         }
-//       }
-//     }
-//     featuredCollections: collections(
-//       first: 3
-//       query: "collection_type:smart"
-//       sortKey: UPDATED_AT
-//     ) {
-//       nodes {
-//         id
-//         title
-//         handle
-//         image {
-//           altText
-//           width
-//           height
-//           url
-//         }
-//       }
-//     }
-//     featuredProducts: products(first: 12) {
-//       nodes {
-//         ...ProductCard
-//       }
+//   sortKey: UPDATED_AT
+// ) {
+//   nodes {
+//     id
+//     title
+//     handle
+//     image {
+//       altText
+//       width
+//       height
+//       url
 //     }
 //   }
-// `;
+// }
 
-// const HOMEPAGE_SEO_QUERY = gql`
-//   query shopInfo {
-//     shop {
-//       name
-//       description
-//     }
-//   }
-// `;
+const HOMEPAGE_SEO_QUERY = gql`
+  query shopInfo {
+    shop {
+      name
+      description
+    }
+  }
+`;
