@@ -24,11 +24,11 @@ import {Section, ShopByRegion, FeaturedProducts} from '../components/index';
 export default function Homepage() {
   return (
     <Layout>
-      <Section>
+      <Suspense>
+        <SeoForHomepage />
+      </Suspense>
+      <Section className="bg-garden-cream">
         <h1 className="text-center h-screen">HERO</h1>
-        <Suspense>
-          <SeoForHomepage />
-        </Suspense>
       </Section>
       <Suspense>
         <HomepageContent />
@@ -55,9 +55,9 @@ function HomepageContent() {
   return (
     <>
       <Section className="bg-garden-teal min-h-[75vh]">
-        <ShopByRegion className="max-w-[1280px]" />
+        <ShopByRegion />
       </Section>
-      <Section className="bg-garden-cream min-h-[75vh] flex items-center">
+      <Section className="bg-garden-cream min-h-[75vh] flex items-center md:py-64 py">
         <FeaturedProducts products={products.nodes} />
       </Section>
       <Section className="bg-blue-300 min-h-[75vh]">
