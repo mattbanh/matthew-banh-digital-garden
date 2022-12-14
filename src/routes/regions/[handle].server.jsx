@@ -52,23 +52,44 @@ export default function Collection({params}) {
       <Suspense>
         <Seo type="collection" data={collection} />
       </Suspense>
-      <PageHeader heading={collection.title}>
-        {collection?.description && (
-          <div className="flex items-baseline justify-between w-full">
-            <div>
-              <Text format width="narrow" as="p" className="inline-block">
-                {collection.description}
-              </Text>
+      <Section className="bg-garden-cream py-20 min-h-[600px]">
+        <div className="max-w-[1440px] mx-auto ">
+          <h1 className="text-3xl text-garden-grey font-bold my-8 md:text-4xl">
+            {collection.title}
+          </h1>
+          <div className="flex flex-col-reverse md:flex-row md:gap-16">
+            <div className="mb-12">
+              {collection?.description && (
+                <div className="w-full">
+                  <div>
+                    <p className="text-sm text-garden-grey leading-7 mb-4">
+                      {collection.description}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="mb-12 md:mb-0 md:w-[40%] flex-shrink-0">
+              <img
+                className="block w-full rounded-tr-[30px] "
+                src={collection.image.url}
+              ></img>
             </div>
           </div>
-        )}
-      </PageHeader>
-      <Section>
-        <ProductGrid
-          key={collection.id}
-          collection={collection}
-          url={`/collections/${handle}?country=${country}`}
-        />
+        </div>
+      </Section>
+
+      <Section className="bg-garden-cream min-h-[720px] py-20 ">
+        <div className="max-w-[1440px] mx-auto">
+          <h2 className="text-xl font-bold text-garden-grey mb-6 text-center md:text-left md:text-2xl">
+            Shop from {collection.title}
+          </h2>
+          <ProductGrid
+            key={collection.id}
+            collection={collection}
+            url={`/collections/${handle}?country=${country}`}
+          />
+        </div>
       </Section>
     </Layout>
   );

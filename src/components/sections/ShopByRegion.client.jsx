@@ -5,12 +5,12 @@ import map from '../../assets/images/map-of-japan.png';
 // SHOPBYREGION SECTION
 export function ShopByRegion() {
   return (
-    <section className="flex flex-col gap-8 max-w-[1440px] md:mx-auto md:flex-row ">
+    <section className="flex flex-col gap-8 max-w-[1440px] md:mx-auto md:flex-row md:pt-0 pb-[400px]">
       <div className="md:w-1/2 flex flex-col justify-center">
         <h2 className="text-center text-xl text-garden-cream font-bold mb-8 md:text-4xl md:mb-12">
           Shop by Region
         </h2>
-        <p className="text-sm text-garden-cream leading-7 mb-4">
+        <p className="text-md text-garden-cream leading-7 mb-4">
           Japan is made up of four main islands and over 6,800 smaller islands.
           The four main islands are Hokkaido, Honshu, Shikoku, and Kyushu. Each
           of these islands has its own distinct regions and prefectures, which
@@ -18,7 +18,7 @@ export function ShopByRegion() {
           include Tokyo, which is the capital and largest city, as well as other
           major cities like Osaka and Yokohama.
         </p>
-        <p className="text-sm text-garden-cream leading-7 mb-4">
+        <p className="text-md text-garden-cream leading-7 mb-4">
           Click on the map to shop by region.
         </p>
       </div>
