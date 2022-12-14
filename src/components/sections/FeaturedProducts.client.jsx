@@ -3,7 +3,7 @@ import {FeaturedProductCard} from '../index';
 
 export function FeaturedProducts({products}) {
   return (
-    <section className="align-middle  max-w-[1440px] pt-16 md:mx-auto md:pt-0">
+    <section className="align-middle  max-w-[1440px] pt-16 md:mx-auto md:pt-0 pb-[240px]">
       <h2 className="text-xl text-garden-grey font-bold mb-8 md:text-4xl md:mb-12">
         Featured Products
       </h2>
@@ -19,7 +19,7 @@ export function FeaturedProducts({products}) {
             to="/products"
           >
             <div className="bg-garden-grey rounded-full w-full h-full flex justify-center items-center transition ease-in-out -translate-x-full group-hover:translate-x-0 duration-500"></div>
-            <span className="absolute w-full text-center top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-xs font-bold text-garden-grey group-hover:text-white transition ease-in-out duration-500">
+            <span className="absolute w-full text-center top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-xs font-bold text-garden-grey group-hover:text-garden-cream transition ease-in-out duration-500">
               VIEW ALL
             </span>
           </Link>

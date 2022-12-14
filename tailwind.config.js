@@ -28,6 +28,7 @@ module.exports = {
         'garden-green': '#8BC7A4',
         'garden-blue': '#DAEBE8',
         'garden-turquoise': '#67BBBF',
+        'garden-orange': '#EF8062',
       },
       // 512px, 768px, 1024px, 1280px, 1536px
       screens: {

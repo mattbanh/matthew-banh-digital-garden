@@ -5,7 +5,7 @@ import map from '../../assets/images/map-of-japan.png';
 // SHOPBYREGION SECTION
 export function ShopByRegion() {
   return (
-    <section className="flex flex-col gap-8 max-w-[1440px] py-16 md:mx-auto md:flex-row md:pt-0 md:pb-[300px]">
+    <section className="flex flex-col gap-8 max-w-[1440px] md:mx-auto md:flex-row md:pt-0 pb-[400px]">
       <div className="md:w-1/2 flex flex-col justify-center">
         <h2 className="text-center text-xl text-garden-cream font-bold mb-8 md:text-4xl md:mb-12">
           Shop by Region
