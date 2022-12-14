@@ -18,7 +18,7 @@ export function FeaturedProductCard({product}) {
 
   return (
     <Link to={`/products/${product.handle}`}>
-      <div className="mb-8 md:rounded-md md:hover:shadow-md ease-in-out duration-300 md:p-6 md:mb-0">
+      <div className="mb-8 md:rounded-md md:hover:shadow-md ease-in-out duration-300  md:mb-0 md:p-3 lg:p-4 xl:p-6">
         <div className="card-image aspect-[4/5] bg-primary/5 mb-6">
           {image && (
             <Image

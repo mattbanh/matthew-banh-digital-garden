@@ -3,19 +3,19 @@ import {FeaturedProductCard} from '../index';
 
 export function FeaturedProducts({products}) {
   return (
-    <section className="align-middle  max-w-[1440px] md:mx-auto">
+    <section className="align-middle  max-w-[1440px] pt-16 md:mx-auto md:pt-0">
       <h2 className="text-xl text-garden-grey font-bold mb-8 md:text-4xl md:mb-12">
         Featured Products
       </h2>
       <div className="md:flex">
-        <div className="md:flex md:gap-4">
+        <div className="md:flex md:gap-1 lg:gap-2 xl:gap-3">
           {products.map((product) => (
             <FeaturedProductCard product={product} key={product.id} />
           ))}
         </div>
         <div className="flex justify-center items-end md:min-w-[25%] md:items-center">
           <Link
-            className="relative group overflow-hidden rounded-full box-content border-2 border-garden-grey h-24 w-24 border-1 mb-16 lg:h-32 lg:w-32 "
+            className="relative group overflow-hidden rounded-full box-content border-2 border-garden-grey h-28 w-28 md:h-24 md:w-24 border-1 mb-16 lg:h-28 lg:w-28 xl:h-32 xl:w-32 "
             to="/products"
           >
             <div className="bg-garden-grey rounded-full w-full h-full flex justify-center items-center transition ease-in-out -translate-x-full group-hover:translate-x-0 duration-500"></div>
