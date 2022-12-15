@@ -8,6 +8,7 @@ import {
   useLocalization,
   useShopQuery,
   useServerAnalytics,
+  Link,
 } from '@shopify/hydrogen';
 
 import {PRODUCT_CARD_FRAGMENT} from '~/lib/fragments';
@@ -21,6 +22,7 @@ import {
   PageHeader,
 } from '~/components';
 import {Layout, ProductSwimlane} from '~/components/index.server';
+import {Section} from '~/components/index';
 
 export default function Account({response}) {
   response.cache(CacheNone());
@@ -89,7 +91,7 @@ function AuthenticatedAccount({
 
   const heading = customer
     ? customer.firstName
-      ? `Welcome, ${customer.firstName}.`
+      ? `Welcome, ${customer.firstName} ${customer.lastName}.`
       : `Welcome to your account.`
     : 'Account Details';
 
@@ -102,7 +104,14 @@ function AuthenticatedAccount({
         <PageHeader heading={heading}>
           <LogoutButton>Sign out</LogoutButton>
         </PageHeader>
-        {orders && <AccountOrderHistory orders={orders} />}
+        <Section>
+          <h3 className="font-bold text-lead">Vendor Dashboard</h3>
+          <div>
+            <Link className="p-4 bg-garden-teal rounded-md" to="/add-product">
+              <span className="text-garden-cream font-bold">Add Product</span>
+            </Link>
+          </div>
+        </Section>
         <AccountDetails
           firstName={customer.firstName}
           lastName={customer.lastName}
@@ -113,6 +122,7 @@ function AuthenticatedAccount({
           defaultAddress={defaultAddress}
           addresses={addresses}
         />
+        {orders && <AccountOrderHistory orders={orders} />}
         {!orders && (
           <>
             <FeaturedCollections

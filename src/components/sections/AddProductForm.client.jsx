@@ -1,49 +1,4 @@
-// import {useNavigate} from '@shopify/hydrogen';
-import {useState, useEffect} from 'react';
-
 export function AddProductForm({data}) {
-  // const {customerAccessToken} = useSession();
-  // const [isSubmitted, setIsSubmitted] = useState(false);
-  // const navigate = useNavigate();
-  // // const [isError, setIsError] = useState(false);
-  // const formValidation = (event) => {
-  //   const {name, description, price} = event.target;
-
-  //   if (!name || !description || !price) {
-  //     return false;
-  //   }
-  //   return true;
-  // };
-  // function addProduct() {
-
-  // const [selectedFile, setSelectedFile] = useState();
-  // const [preview, setPreview] = useState();
-
-  // // create a preview as a side effect, whenever selected file is changed
-  // useEffect(() => {
-  //   if (!selectedFile) {
-  //     setPreview(undefined);
-  //     return;
-  //   }
-
-  //   const objectUrl = URL.createObjectURL(selectedFile);
-  //   console.log(objectUrl);
-  //   setPreview(objectUrl);
-
-  //   // free memory when ever this component is unmounted
-  //   return () => URL.revokeObjectURL(objectUrl);
-  // }, [selectedFile]);
-
-  // const onSelectFile = (e) => {
-  //   if (!e.target.files || e.target.files.length === 0) {
-  //     setSelectedFile(undefined);
-  //     return;
-  //   }
-
-  //   // I've kept this example simple by using the first image instead of multiple
-  //   setSelectedFile(e.target.files[0]);
-  // };
-
   // Currently vendor name is the cusomter first and last name. Will need to add vendor name section
   const vendorName = `${data.customer.firstName} ${data.customer.lastName}`;
 
@@ -98,9 +53,6 @@ export function AddProductForm({data}) {
             type="text"
             placeholder=""
           />
-          {/* <p className="text-red-500 text-xs italic">
-              Please fill out this field.
-            </p> */}
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-6">
@@ -119,7 +71,8 @@ export function AddProductForm({data}) {
           />
         </div>
       </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
+      {/* TO DO: Add image upload */}
+      {/* <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -135,9 +88,9 @@ export function AddProductForm({data}) {
             placeholder=""
           />
         </div>
-      </div>
+      </div> */}
       <div className="flex flex-wrap -mx-3 mb-2">
-        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-8">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             htmlFor="product-price"
@@ -151,19 +104,13 @@ export function AddProductForm({data}) {
             placeholder=""
           />
         </div>
-        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-          <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="vendor"
-            type="hidden"
-            // value={data.customer.id}
-          />
-        </div>
       </div>
-      <button type="submit">Click Me</button>
+      <button
+        className="appearance-none block bg-garden-indigo text-garden-cream border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        type="submit"
+      >
+        Submit
+      </button>
     </form>
   );
-  // } else {
-  //   return <AddProductSuccess />;
-  // }
 }
