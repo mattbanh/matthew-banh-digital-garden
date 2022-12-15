@@ -27,47 +27,37 @@ export default function AddProduct() {
 
   return (
     <Layout>
-      <Section>
-        <h1 className="font-bold text-4xl">Add Product</h1>
+      <div className="bg-garden-cream md:min-h-[1080px]">
+        <Section>
+          <h1 className="font-bold text-4xl">Add Product</h1>
 
-        <AddProductFormComp />
+          <AddProductFormComp />
 
-        {/* <TestQuery /> */}
-      </Section>
+          {/* <TestQuery /> */}
+        </Section>
+      </div>
     </Layout>
   );
 }
 
-export async function api(request) {
-  const data = await request.formData();
-  const productName = data.get('name');
-  const productDescription = data.get('description');
-  const productPrice = data.get('price');
-
-  return (
-    <h1>
-      {productName} {productDescription} {productPrice}
-    </h1>
-  );
-}
 function AddProductFormComp() {
-  // const {customerAccessToken} = useSession();
+  const {customerAccessToken} = useSession();
 
-  // const {
-  //   language: {isoCode: languageCode},
-  //   country: {isoCode: countryCode},
-  // } = useLocalization();
-  // const {data} = useShopQuery({
-  //   query: CUSTOMER_QUERY,
-  //   variables: {
-  //     customerAccessToken,
-  //     language: languageCode,
-  //     country: countryCode,
-  //   },
-  //   cache: CacheNone(),
-  // });
+  const {
+    language: {isoCode: languageCode},
+    country: {isoCode: countryCode},
+  } = useLocalization();
+  const {data} = useShopQuery({
+    query: CUSTOMER_QUERY,
+    variables: {
+      customerAccessToken,
+      language: languageCode,
+      country: countryCode,
+    },
+    cache: CacheNone(),
+  });
 
-  return <AddProductForm />;
+  return <AddProductForm data={data} />;
 }
 
 // function TestQuery() {

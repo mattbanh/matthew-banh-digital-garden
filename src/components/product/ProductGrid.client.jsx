@@ -23,7 +23,7 @@ export function ProductGrid({url, collection}) {
       method: 'POST',
     });
     const {data} = await response.json();
-
+    window.console.log(data);
     // ProductGrid can paginate collection, products and search routes
     // @ts-ignore TODO: Fix types
     const newProducts = flattenConnection(

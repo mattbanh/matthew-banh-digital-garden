@@ -98,29 +98,31 @@ function AuthenticatedAccount({
       <Suspense>
         <Seo type="noindex" data={{title: 'Account details'}} />
       </Suspense>
-      <PageHeader heading={heading}>
-        <LogoutButton>Sign out</LogoutButton>
-      </PageHeader>
-      {orders && <AccountOrderHistory orders={orders} />}
-      <AccountDetails
-        firstName={customer.firstName}
-        lastName={customer.lastName}
-        phone={customer.phone}
-        email={customer.email}
-      />
-      <AccountAddressBook
-        defaultAddress={defaultAddress}
-        addresses={addresses}
-      />
-      {!orders && (
-        <>
-          <FeaturedCollections
-            title="Popular Collections"
-            data={featuredCollections}
-          />
-          <ProductSwimlane data={featuredProducts} />
-        </>
-      )}
+      <div className="bg-garden-cream">
+        <PageHeader heading={heading}>
+          <LogoutButton>Sign out</LogoutButton>
+        </PageHeader>
+        {orders && <AccountOrderHistory orders={orders} />}
+        <AccountDetails
+          firstName={customer.firstName}
+          lastName={customer.lastName}
+          phone={customer.phone}
+          email={customer.email}
+        />
+        <AccountAddressBook
+          defaultAddress={defaultAddress}
+          addresses={addresses}
+        />
+        {!orders && (
+          <>
+            <FeaturedCollections
+              title="Popular Collections"
+              data={featuredCollections}
+            />
+            <ProductSwimlane data={featuredProducts} />
+          </>
+        )}
+      </div>
     </Layout>
   );
 }

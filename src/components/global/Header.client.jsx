@@ -135,7 +135,7 @@ function DesktopHeader({countryCode, isHome, menu, openCart}) {
 
   return (
     <header role="banner" className={styles.container}>
-      <Link className={`font-bold mr-10 min-w-[285px]`} to="/">
+      <Link className={`font-bold min-w-[285px]`} to="/">
         <Image
           src={logo}
           width={140}
@@ -147,7 +147,7 @@ function DesktopHeader({countryCode, isHome, menu, openCart}) {
         {/* Top level menu items */}
         {(menu?.items || []).map((item) => (
           <Link
-            className="mr-10"
+            className="mx-5"
             key={item.id}
             to={item.to}
             target={item.target}

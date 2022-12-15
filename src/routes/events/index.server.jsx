@@ -14,7 +14,7 @@ import {ArticleCard, Grid, PageHeader} from '~/components';
 import {Layout} from '~/components/index.server';
 import {getImageLoadingPriority, PAGINATION_SIZE} from '~/lib/const';
 
-const BLOG_HANDLE = 'Journal';
+const BLOG_HANDLE = 'Events';
 
 export default function Blog({pageBy = PAGINATION_SIZE, response}) {
   response.cache(CacheLong());
@@ -22,11 +22,13 @@ export default function Blog({pageBy = PAGINATION_SIZE, response}) {
   return (
     <Layout>
       <Seo type="page" data={{title: 'All Journals'}} />
-      <PageHeader heading={BLOG_HANDLE} className="gap-0">
-        <Suspense>
-          <JournalsGrid pageBy={pageBy} />
-        </Suspense>
-      </PageHeader>
+      <div className="bg-garden-cream">
+        <PageHeader heading={BLOG_HANDLE} className="gap-0">
+          <Suspense>
+            <JournalsGrid pageBy={pageBy} />
+          </Suspense>
+        </PageHeader>
+      </div>
     </Layout>
   );
 }

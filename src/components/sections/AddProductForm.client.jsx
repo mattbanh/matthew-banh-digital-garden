@@ -1,10 +1,10 @@
-// import React, {useState} from 'react';
-import {useNavigate} from '@shopify/hydrogen';
-// import {AddProductSuccess} from './AddProductSuccess.server';
+// import {useNavigate} from '@shopify/hydrogen';
+import {useState, useEffect} from 'react';
 
-export function AddProductForm() {
+export function AddProductForm({data}) {
+  // const {customerAccessToken} = useSession();
   // const [isSubmitted, setIsSubmitted] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // // const [isError, setIsError] = useState(false);
   // const formValidation = (event) => {
   //   const {name, description, price} = event.target;
@@ -15,13 +15,73 @@ export function AddProductForm() {
   //   return true;
   // };
   // function addProduct() {
+
+  // const [selectedFile, setSelectedFile] = useState();
+  // const [preview, setPreview] = useState();
+
+  // // create a preview as a side effect, whenever selected file is changed
+  // useEffect(() => {
+  //   if (!selectedFile) {
+  //     setPreview(undefined);
+  //     return;
+  //   }
+
+  //   const objectUrl = URL.createObjectURL(selectedFile);
+  //   console.log(objectUrl);
+  //   setPreview(objectUrl);
+
+  //   // free memory when ever this component is unmounted
+  //   return () => URL.revokeObjectURL(objectUrl);
+  // }, [selectedFile]);
+
+  // const onSelectFile = (e) => {
+  //   if (!e.target.files || e.target.files.length === 0) {
+  //     setSelectedFile(undefined);
+  //     return;
+  //   }
+
+  //   // I've kept this example simple by using the first image instead of multiple
+  //   setSelectedFile(e.target.files[0]);
+  // };
+
+  // Currently vendor name is the cusomter first and last name. Will need to add vendor name section
+  const vendorName = `${data.customer.firstName} ${data.customer.lastName}`;
+
+  // send form data to server end to make post request
+  async function sendFormData(event) {
+    console.log(event.target.image.value);
+    let formDataObject = {
+      name: event.target.name.value,
+      description: event.target.description.value,
+      price: event.target.price.value,
+      vendor: vendorName,
+    };
+
+    let formDataJsonString = JSON.stringify(formDataObject);
+    let fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+
+      body: formDataJsonString,
+    };
+
+    let res = await fetch(`/api/addProduct`, fetchOptions);
+
+    if (!res.ok) {
+      let error = await res.text();
+      throw new Error(error);
+    } else {
+      return 'Success';
+    }
+  }
   const onSubmit = (event) => {
     event.preventDefault();
-    // console.log(event.target.description.value);
-    navigate('/add-product/submit', {state: {id: 7, color: 'green'}});
-    // setIsSubmitted(true);
+    sendFormData(event);
   };
-  // if (!isSubmitted) {
+
   return (
     <form onSubmit={onSubmit} className="w-full max-w-6xl">
       <div className="flex flex-wrap -mx-3 mb-6">
@@ -68,7 +128,6 @@ export function AddProductForm() {
             Product Image
           </label>
           <input
-            // className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             id="image"
             type="file"
             accept="image/png, image/jpeg, image/jpg"
