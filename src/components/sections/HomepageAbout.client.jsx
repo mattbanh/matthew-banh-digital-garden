@@ -45,11 +45,12 @@ export function HomepageAbout() {
             </p>
           </div>
         </div>
-        <div className="md:w-1/3 md:p-8">
+        <div className="md:w-1/3 md:p-8 invisible lg:visible">
           <div className="md:sticky top-1/3 text-center">
             <Image
-              width={720}
-              height={720}
+              className="hidden lg:block"
+              width={360}
+              height={360}
               src={earth}
               id="js-logo"
               alt="rotating earth"

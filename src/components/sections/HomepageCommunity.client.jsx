@@ -7,7 +7,7 @@ import {Section} from '../index';
 export function HomepageCommunity() {
   return (
     <section className="-mt-[240px] -mb-[240px] ">
-      <div className="bg-garden-blue relative min-h-[1080px] rounded-[60px] md:min-h-[1920px]  md:rounded-[120px] lg:min-h-[2160px] lg:rounded-[160px] xl:min-h-[2560px] xl:rounded-[200px] flex items-center overflow-hidden">
+      <div className="bg-garden-blue relative min-h-[1080px] rounded-[60px] sm:min-h-[1920px]  md:rounded-[120px] lg:min-h-[2160px] lg:rounded-[160px] xl:min-h-[2560px] xl:rounded-[200px] flex items-center overflow-hidden">
         <Image
           className="absolute top-0"
           height={1440}
@@ -16,7 +16,7 @@ export function HomepageCommunity() {
           alt="community graphic"
         />
         <Section className="lg:mb-[240px]">
-          <div className="flex flex-col-reverse md:flex-col lg:flex-row lg:justify-between md:gap-16">
+          <div className="flex flex-col-reverse sm:flex-col lg:flex-row lg:justify-between md:gap-16">
             <div className="lg:w-1/2">
               <h3 className="text-3xl text-garden-turquoise font-bold mb-8 md:text-7xl">
                 OUR COMMUNITY

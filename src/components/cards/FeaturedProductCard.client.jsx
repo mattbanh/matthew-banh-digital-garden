@@ -18,7 +18,7 @@ export function FeaturedProductCard({product}) {
 
   return (
     <Link to={`/products/${product.handle}`}>
-      <div className="mb-8 md:rounded-md md:hover:shadow-md ease-in-out duration-300  md:mb-0 md:p-3 lg:p-4 xl:p-6">
+      <div className="mb-8 md:rounded-md md:hover:shadow-md hover:scale-[101%] hover:bg-neutral-100 ease-in-out duration-300  md:mb-0 md:p-3 lg:p-4 xl:p-6 ">
         <div className="card-image aspect-[4/5] bg-primary/5 mb-6">
           {image && (
             <Image
@@ -45,12 +45,12 @@ export function FeaturedProductCard({product}) {
           <div className="flex gap-4">
             <span className="flex gap-4 text-sm text-slate-400">
               <Money data={price} />
-              {/* {isDiscounted(price, compareAtPrice) && (
+              {isDiscounted(price, compareAtPrice) && (
                 <CompareAtPrice
                   className={'opacity-50'}
                   data={compareAtPrice}
                 />
-              )} */}
+              )}
             </span>
           </div>
         </div>
