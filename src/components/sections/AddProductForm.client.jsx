@@ -1,27 +1,42 @@
-// import React, {useState} from 'react';
-import {useNavigate} from '@shopify/hydrogen';
-// import {AddProductSuccess} from './AddProductSuccess.server';
+export function AddProductForm({data}) {
+  // Currently vendor name is the cusomter first and last name. Will need to add vendor name section
+  const vendorName = `${data.customer.firstName} ${data.customer.lastName}`;
 
-export function AddProductForm() {
-  // const [isSubmitted, setIsSubmitted] = useState(false);
-  const navigate = useNavigate();
-  // // const [isError, setIsError] = useState(false);
-  // const formValidation = (event) => {
-  //   const {name, description, price} = event.target;
+  // send form data to server end to make post request
+  async function sendFormData(event) {
+    console.log(event.target.image.value);
+    let formDataObject = {
+      name: event.target.name.value,
+      description: event.target.description.value,
+      price: event.target.price.value,
+      vendor: vendorName,
+    };
 
-  //   if (!name || !description || !price) {
-  //     return false;
-  //   }
-  //   return true;
-  // };
-  // function addProduct() {
+    let formDataJsonString = JSON.stringify(formDataObject);
+    let fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+
+      body: formDataJsonString,
+    };
+
+    let res = await fetch(`/api/addProduct`, fetchOptions);
+
+    if (!res.ok) {
+      let error = await res.text();
+      throw new Error(error);
+    } else {
+      return 'Success';
+    }
+  }
   const onSubmit = (event) => {
     event.preventDefault();
-    // console.log(event.target.description.value);
-    navigate('/add-product/submit', {state: {id: 7, color: 'green'}});
-    // setIsSubmitted(true);
+    sendFormData(event);
   };
-  // if (!isSubmitted) {
+
   return (
     <form onSubmit={onSubmit} className="w-full max-w-6xl">
       <div className="flex flex-wrap -mx-3 mb-6">
@@ -38,9 +53,6 @@ export function AddProductForm() {
             type="text"
             placeholder=""
           />
-          {/* <p className="text-red-500 text-xs italic">
-              Please fill out this field.
-            </p> */}
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-6">
@@ -59,7 +71,8 @@ export function AddProductForm() {
           />
         </div>
       </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
+      {/* TO DO: Add image upload */}
+      {/* <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -68,7 +81,6 @@ export function AddProductForm() {
             Product Image
           </label>
           <input
-            // className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             id="image"
             type="file"
             accept="image/png, image/jpeg, image/jpg"
@@ -76,9 +88,9 @@ export function AddProductForm() {
             placeholder=""
           />
         </div>
-      </div>
+      </div> */}
       <div className="flex flex-wrap -mx-3 mb-2">
-        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-8">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             htmlFor="product-price"
@@ -92,19 +104,13 @@ export function AddProductForm() {
             placeholder=""
           />
         </div>
-        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-          <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="vendor"
-            type="hidden"
-            // value={data.customer.id}
-          />
-        </div>
       </div>
-      <button type="submit">Click Me</button>
+      <button
+        className="appearance-none block bg-garden-indigo text-garden-cream border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        type="submit"
+      >
+        Submit
+      </button>
     </form>
   );
-  // } else {
-  //   return <AddProductSuccess />;
-  // }
 }
