@@ -7,9 +7,9 @@ export function ShopByRegion() {
   return (
     <section className="flex flex-col gap-8 max-w-[1440px] md:mx-auto md:flex-row md:pt-0 pb-[400px]">
       <div className="md:w-1/2 flex flex-col justify-center">
-        <h2 className="text-center text-xl text-garden-cream font-bold mb-8 md:text-4xl md:mb-12">
-          Shop by Region
-        </h2>
+        <h3 className="text-3xl text-garden-cream font-bold mb-8 md:text-7xl">
+          SHOP BY REGION
+        </h3>
         <p className="text-md text-garden-cream leading-7 mb-4">
           Japan is made up of four main islands and over 6,800 smaller islands.
           The four main islands are Hokkaido, Honshu, Shikoku, and Kyushu. Each

@@ -1,7 +1,20 @@
+import earth from '../../assets/images/earth.png';
+import {Image} from '@shopify/hydrogen';
+import {useEffect} from 'react';
+
 export function HomepageAbout() {
+  useEffect(() => {
+    document.onscroll = function () {
+      var theta = (document.documentElement.scrollTop / 500) % Math.PI;
+
+      document.getElementById('js-logo').style.transform =
+        'rotate(' + theta + 'rad)';
+    };
+  });
+
   return (
     <>
-      <div className="w-full py-16 min-h-full md:py-48 lg:flex lg:justify-between lg:py-72 lg:max-w-[1440px] lg:mx-auto">
+      <div className="w-full py-16 min-h-full md:py-48 lg:min-h-[2560px]  lg:flex lg:justify-between lg:py-72 lg:max-w-[1440px] lg:mx-auto">
         <div className="lg:w-1/3 md:flex md:flex-col md:justify-between">
           <div className="mb-24 lg:mb-0">
             <h3 className="text-3xl text-garden-cream font-bold mb-8 md:text-7xl">
@@ -32,11 +45,18 @@ export function HomepageAbout() {
             </p>
           </div>
         </div>
-        <div className="md:w-1/3">
+        <div className="md:w-1/3 md:p-8">
           <div className="md:sticky top-1/3 text-center">
-            <span className="text-5xl text-garden-orange font-bold invisible lg:visible">
+            <Image
+              width={720}
+              height={720}
+              src={earth}
+              id="js-logo"
+              alt="rotating earth"
+            />
+            {/* <span className="text-5xl text-garden-orange font-bold invisible lg:visible">
               LOVE LOCAL
-            </span>
+            </span> */}
           </div>
         </div>
         <div className="lg:w-1/3 md:flex md:flex-col md:justify-center">

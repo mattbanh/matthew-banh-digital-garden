@@ -1,12 +1,12 @@
 import {Link} from '@shopify/hydrogen';
 import {FeaturedProductCard} from '../index';
 
-export function FeaturedProducts({products}) {
+export function FeaturedProducts({products, featuredType}) {
   return (
-    <section className="align-middle  max-w-[1440px] pt-16 md:mx-auto md:pt-0 pb-[240px]">
-      <h2 className="text-xl text-garden-grey font-bold mb-8 md:text-4xl md:mb-12">
-        Featured Products
-      </h2>
+    <section className="align-middle  max-w-[1440px] pt-16 md:mx-auto md:pt-0 md:mb-16">
+      <h3 className="text-xl text-garden-grey font-bold mb-8 md:text-4xl md:mb-12">
+        Popular in {featuredType}
+      </h3>
       <div className="md:flex">
         <div className="md:flex md:gap-1 lg:gap-2 xl:gap-3">
           {products.map((product) => (

@@ -45,12 +45,12 @@ export function FeaturedProductCard({product}) {
           <div className="flex gap-4">
             <span className="flex gap-4 text-sm text-slate-400">
               <Money data={price} />
-              {isDiscounted(price, compareAtPrice) && (
+              {/* {isDiscounted(price, compareAtPrice) && (
                 <CompareAtPrice
                   className={'opacity-50'}
                   data={compareAtPrice}
                 />
-              )}
+              )} */}
             </span>
           </div>
         </div>

@@ -16,10 +16,7 @@ export default function AddProduct() {
       <div className="bg-garden-cream md:min-h-[1080px]">
         <Section>
           <h1 className="font-bold text-4xl">Add Product</h1>
-
           <AddProductFormComp />
-
-          {/* <TestQuery /> */}
         </Section>
       </div>
     </Layout>

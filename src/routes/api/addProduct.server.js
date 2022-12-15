@@ -18,7 +18,7 @@ function AddProduct(data) {
   const {name, description, price, vendor} = data;
   axios
     .post(
-      'https://digital-garden-city-nation.myshopify.com/admin/api/2022-10/products.json',
+      `${Oxygen?.env?.PUBLIC_STORE_DOMAIN}/admin/api/2022-10/products.json`,
       {
         product: {
           title: name,
@@ -37,7 +37,7 @@ function AddProduct(data) {
       const variantId = response.data.product.variants[0].id;
       axios
         .put(
-          `https://digital-garden-city-nation.myshopify.com/admin/api/2022-10/variants/${variantId}.json`,
+          `${Oxygen?.env?.PUBLIC_STORE_DOMAIN}/admin/api/2022-10/variants/${variantId}.json`,
           {
             variant: {
               price,
