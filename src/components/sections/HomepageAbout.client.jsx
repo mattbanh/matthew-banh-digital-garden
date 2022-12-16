@@ -1,14 +1,19 @@
+// Homepage About Section
+
 import earth from '../../assets/images/earth.png';
 import {Image} from '@shopify/hydrogen';
 import {useEffect} from 'react';
 
 export function HomepageAbout() {
+  // Quick way to use scroll effect to make an element rotate
+  // Should be re-written to not include getElementById(ex. useRef)
   useEffect(() => {
     document.onscroll = function () {
       var theta = (document.documentElement.scrollTop / 500) % Math.PI;
-
-      document.getElementById('js-logo').style.transform =
-        'rotate(' + theta + 'rad)';
+      if (document.getElementById('rotating-earth')) {
+        document.getElementById('rotating-earth').style.transform =
+          'rotate(' + theta + 'rad)';
+      }
     };
   });
 
@@ -52,12 +57,9 @@ export function HomepageAbout() {
               width={360}
               height={360}
               src={earth}
-              id="js-logo"
+              id="rotating-earth"
               alt="rotating earth"
             />
-            {/* <span className="text-5xl text-garden-orange font-bold invisible lg:visible">
-              LOVE LOCAL
-            </span> */}
           </div>
         </div>
         <div className="lg:w-1/3 md:flex md:flex-col md:justify-center">

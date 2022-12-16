@@ -27,7 +27,7 @@ export function ShopByRegion() {
           to="/regions"
         >
           <div className="bg-garden-cream rounded-full w-full h-full flex justify-center items-center transition ease-in-out -translate-x-full group-hover:translate-x-0 duration-500"></div>
-          <span className="absolute w-full text-center top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-xs font-bold text-garden-cream group-hover:text-garden-grey transition ease-in-out duration-500">
+          <span className="absolute w-full text-center top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-xs font-bold text-garden-cream group-hover:text-garden-teal transition ease-in-out duration-500">
             VIEW ALL REGIONS
           </span>
         </Link>

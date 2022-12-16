@@ -22,12 +22,14 @@ export default function Blog({pageBy = PAGINATION_SIZE, response}) {
   return (
     <Layout>
       <Seo type="page" data={{title: 'All Journals'}} />
-      <div className="bg-garden-cream">
-        <PageHeader heading={BLOG_HANDLE} className="gap-0">
-          <Suspense>
-            <JournalsGrid pageBy={pageBy} />
-          </Suspense>
-        </PageHeader>
+      <div className="bg-garden-cream ">
+        <div className="max-w-[1440px] mx-auto">
+          <PageHeader heading={BLOG_HANDLE} className="gap-0">
+            <Suspense>
+              <JournalsGrid pageBy={pageBy} />
+            </Suspense>
+          </PageHeader>
+        </div>
       </div>
     </Layout>
   );

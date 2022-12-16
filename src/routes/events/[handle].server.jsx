@@ -1,42 +1,20 @@
-import {
-  useLocalization,
-  useShopQuery,
-  Seo,
-  gql,
-  Image,
-  CacheLong,
-  useServerAnalytics,
-  ShopifyAnalyticsConstants,
-} from '@shopify/hydrogen';
-import {Suspense} from 'react';
+// Page to render events blog entries
 
-import {CustomFont, PageHeader, Section} from '~/components';
+import {useShopQuery, gql, Image} from '@shopify/hydrogen';
+
+import {PageHeader, Section} from '~/components';
 import {Layout, NotFound} from '~/components/index.server';
 import {ATTR_LOADING_EAGER} from '~/lib/const';
 
 const BLOG_HANDLE = 'events';
 
-export default function Post({params, response}) {
-  response.cache(CacheLong());
-  const {
-    language: {isoCode: languageCode},
-    country: {isoCode: countryCode},
-  } = useLocalization();
-
+export default function Post({params}) {
   const {handle} = params;
   const {data} = useShopQuery({
     query: ARTICLE_QUERY,
     variables: {
-      language: languageCode,
       blogHandle: BLOG_HANDLE,
       articleHandle: handle,
-    },
-  });
-
-  useServerAnalytics({
-    shopify: {
-      canonicalPath: `/${BLOG_HANDLE}/${handle}`,
-      pageType: ShopifyAnalyticsConstants.pageType.article,
     },
   });
 
@@ -45,29 +23,21 @@ export default function Post({params, response}) {
   }
 
   const {title, publishedAt, contentHtml, author} = data.blog.articleByHandle;
-  const formattedDate = new Intl.DateTimeFormat(
-    `${languageCode}-${countryCode}`,
-    {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    },
-  ).format(new Date(publishedAt));
+  const formattedDate = new Intl.DateTimeFormat(`en-US`, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(new Date(publishedAt));
 
   return (
     <Layout>
       <div className="bg-garden-cream">
-        {/* Loads Fraunces custom font only on articles */}
-        <CustomFont />
-        <Suspense>
-          {/* @ts-expect-error Blog article types are not supported in TS */}
-          <Seo type="page" data={data.blog.articleByHandle} />
-        </Suspense>
         <PageHeader heading={title} variant="blogPost">
           <span>
             {formattedDate} &middot; {author.name}
           </span>
         </PageHeader>
+        {/* Section as article provided by Shopify demo */}
         <Section as="article" padding="x">
           {data.blog.articleByHandle.image && (
             <Image
@@ -83,6 +53,7 @@ export default function Post({params, response}) {
               }}
             />
           )}
+          {/* dangerouslySetInnerHTML is used in place of "innerHTML" */}
           <div
             dangerouslySetInnerHTML={{__html: contentHtml}}
             className="article"
@@ -94,11 +65,7 @@ export default function Post({params, response}) {
 }
 
 const ARTICLE_QUERY = gql`
-  query ArticleDetails(
-    $language: LanguageCode
-    $blogHandle: String!
-    $articleHandle: String!
-  ) @inContext(language: $language) {
+  query ArticleDetails($blogHandle: String!, $articleHandle: String!) {
     blog(handle: $blogHandle) {
       articleByHandle(handle: $articleHandle) {
         title

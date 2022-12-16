@@ -1,3 +1,5 @@
+// Account route handled by Shopify
+
 import {Suspense} from 'react';
 import {
   CacheNone,
@@ -11,8 +13,10 @@ import {
   Link,
 } from '@shopify/hydrogen';
 
+// GraphQL query fragment (for repeated queries)
 import {PRODUCT_CARD_FRAGMENT} from '~/lib/fragments';
 import {getApiErrorMessage} from '~/lib/utils';
+// Account components to build out account page after logging in
 import {
   AccountAddressBook,
   AccountDetails,
@@ -137,6 +141,7 @@ function AuthenticatedAccount({
   );
 }
 
+// The neat thing about Hydrogen + Remix is that APIs can exist in route server files
 export async function api(request, {session, queryShop}) {
   if (request.method !== 'PATCH' && request.method !== 'DELETE') {
     return new Response(null, {
@@ -184,6 +189,7 @@ export async function api(request, {session, queryShop}) {
   return new Response(null);
 }
 
+// GraphQL queries
 const CUSTOMER_QUERY = gql`
   ${PRODUCT_CARD_FRAGMENT}
   query CustomerDetails(

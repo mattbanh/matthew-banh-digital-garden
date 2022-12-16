@@ -1,3 +1,5 @@
+// Homepage Community section which leads to events page
+
 import bottom from '../../assets/images/about-bottom.png';
 import middle from '../../assets/images/about-mid.png';
 import top from '../../assets/images/about-top.png';

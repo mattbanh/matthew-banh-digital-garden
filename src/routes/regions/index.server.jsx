@@ -1,3 +1,5 @@
+// View all regions
+
 import {Suspense} from 'react';
 import {
   useShopQuery,

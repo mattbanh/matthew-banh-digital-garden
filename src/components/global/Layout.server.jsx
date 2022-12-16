@@ -26,7 +26,7 @@ export function Layout({children}) {
             Skip to content
           </a>
         </div>
-        <Suspense fallback={<Header title={SHOP_NAME_FALLBACK} />}>
+        <Suspense>
           <HeaderWithMenu />
         </Suspense>
         <main role="main" id="mainContent" className="flex-grow">

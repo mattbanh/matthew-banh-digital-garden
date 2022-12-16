@@ -1,3 +1,5 @@
+// Renders featured product component with Featured product cards
+
 import {Link} from '@shopify/hydrogen';
 import {FeaturedProductCard} from '../index';
 
