@@ -22,7 +22,9 @@ export default function Login({response}) {
       <Suspense>
         <Seo type="noindex" data={{title: 'Login'}} />
       </Suspense>
-      <AccountLoginForm shopName={name} />
+      <div className="bg-garden-cream">
+        <AccountLoginForm shopName={name} />
+      </div>
     </Layout>
   );
 }

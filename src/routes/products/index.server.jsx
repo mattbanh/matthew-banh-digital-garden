@@ -3,14 +3,13 @@ import {useShopQuery, gql, useLocalization, Seo} from '@shopify/hydrogen';
 
 import {PRODUCT_CARD_FRAGMENT} from '~/lib/fragments';
 import {PAGINATION_SIZE} from '~/lib/const';
-import {ProductGrid, PageHeader, Section} from '~/components';
+import {ProductGrid, Section} from '~/components';
 import {Layout} from '~/components/index.server';
 
 export default function AllProducts() {
   return (
     <Layout>
       <Seo type="page" data={{title: 'All Products'}} />
-
       <div className="bg-garden-cream">
         <Section className="bg-garden-cream max-w-[1440px]">
           <Suspense>

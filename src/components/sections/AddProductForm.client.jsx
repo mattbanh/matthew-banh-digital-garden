@@ -1,17 +1,23 @@
+import {useNavigate} from '@shopify/hydrogen';
+
 export function AddProductForm({data}) {
-  // Currently vendor name is the cusomter first and last name. Will need to add vendor name section
+  const navigate = useNavigate();
+
+  // Currently vendor name is the cusomter first and last name.
+  // TO DO: Add option for vendors to sign up with vendor name
   const vendorName = `${data.customer.firstName} ${data.customer.lastName}`;
 
-  // send form data to server end to make post request
+  // The client cannot make Shopify Admin API POST requests,
+  // so the form data must be sent to a server-side API,
+  // which will then send the POST request to Shopify Admin API
   async function sendFormData(event) {
-    console.log(event.target.image.value);
+    // Preparing API request using fetch
     let formDataObject = {
       name: event.target.name.value,
       description: event.target.description.value,
       price: event.target.price.value,
       vendor: vendorName,
     };
-
     let formDataJsonString = JSON.stringify(formDataObject);
     let fetchOptions = {
       method: 'POST',
@@ -19,12 +25,11 @@ export function AddProductForm({data}) {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-
       body: formDataJsonString,
     };
 
+    // API written in routes -> api -> addProduct.server.js
     let res = await fetch(`/api/addProduct`, fetchOptions);
-
     if (!res.ok) {
       let error = await res.text();
       throw new Error(error);
@@ -32,9 +37,12 @@ export function AddProductForm({data}) {
       return 'Success';
     }
   }
+  // TO DO: add form validation
   const onSubmit = (event) => {
     event.preventDefault();
     sendFormData(event);
+
+    navigate('/add-product/success');
   };
 
   return (
@@ -106,7 +114,7 @@ export function AddProductForm({data}) {
         </div>
       </div>
       <button
-        className="appearance-none block bg-garden-indigo text-garden-cream border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        className="appearance-none block bg-garden-indigo text-garden-cream border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-garden-grey focus:border-gray-500"
         type="submit"
       >
         Submit

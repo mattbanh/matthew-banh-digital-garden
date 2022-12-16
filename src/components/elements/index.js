@@ -1,3 +1,5 @@
+// Elements provided by Shopify demo (boilerplate)
+
 export * from './Icon';
 export {Button} from './Button';
 export {Grid} from './Grid';

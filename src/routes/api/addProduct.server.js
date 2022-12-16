@@ -1,16 +1,17 @@
+// Server-side API to receive data from add-product form and make a POST request
+// to Shopify Admin API to add a product
+// Unsure why using Oxygen is necessary for .env variables
 import axios from 'axios';
 
-export async function api(request, {_params}) {
-  const jsonBody = await request.json();
+const storeURL = `https://${Oxygen?.env?.PUBLIC_STORE_DOMAIN}`;
 
+export async function api(request) {
+  // get json form data from client-side addproductform
+  const jsonBody = await request.json();
   AddProduct(jsonBody);
-  //   if (response) {
   return new Response(jsonBody.name, {
     status: 200,
   });
-  //   } else {
-  //     return new Response(null, {status: 404});
-  //   }
 }
 
 function AddProduct(data) {
@@ -18,7 +19,7 @@ function AddProduct(data) {
   const {name, description, price, vendor} = data;
   axios
     .post(
-      'https://digital-garden-city-nation.myshopify.com/admin/api/2022-10/products.json',
+      `${storeURL}/admin/api/2022-10/products.json`,
       {
         product: {
           title: name,
@@ -37,7 +38,7 @@ function AddProduct(data) {
       const variantId = response.data.product.variants[0].id;
       axios
         .put(
-          `https://digital-garden-city-nation.myshopify.com/admin/api/2022-10/variants/${variantId}.json`,
+          `${storeURL}/admin/api/2022-10/variants/${variantId}.json`,
           {
             variant: {
               price,
@@ -50,10 +51,10 @@ function AddProduct(data) {
           },
         )
         .then(function (response) {
-          console.log(response);
+          return response;
         })
         .catch(function (error) {
-          console.log(error);
+          return error;
         });
     })
     .catch(function (error) {

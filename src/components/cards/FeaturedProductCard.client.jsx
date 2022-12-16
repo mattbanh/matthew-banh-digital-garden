@@ -1,3 +1,5 @@
+// Featured Product Card used for Homepage FeaturedProducts
+
 import clsx from 'clsx';
 import {
   flattenConnection,
@@ -7,9 +9,11 @@ import {
   useMoney,
 } from '@shopify/hydrogen';
 
+// Styling for discounted (sale) items provided by Shopify
 import {isDiscounted} from '~/lib/utils';
 
 export function FeaturedProductCard({product}) {
+  // Pulling image and price from product query that came from homepage Featured Product query
   const {
     image,
     priceV2: price,
@@ -18,8 +22,9 @@ export function FeaturedProductCard({product}) {
 
   return (
     <Link to={`/products/${product.handle}`}>
-      <div className="mb-8 md:rounded-md md:hover:shadow-md ease-in-out duration-300  md:mb-0 md:p-3 lg:p-4 xl:p-6">
+      <div className="mb-8 md:rounded-md md:hover:shadow-md hover:scale-[101%] hover:bg-neutral-100 ease-in-out duration-300  md:mb-0 md:p-3 lg:p-4 xl:p-6 ">
         <div className="card-image aspect-[4/5] bg-primary/5 mb-6">
+          {/* Image component provided by Shopify. It is recommended to use Image rather than img */}
           {image && (
             <Image
               className="aspect-[4/5] w-full object-cover fadeIn"
@@ -44,6 +49,7 @@ export function FeaturedProductCard({product}) {
           </h4>
           <div className="flex gap-4">
             <span className="flex gap-4 text-sm text-slate-400">
+              {/* Money comes from Shopify and allows display of money with type of currency */}
               <Money data={price} />
               {isDiscounted(price, compareAtPrice) && (
                 <CompareAtPrice

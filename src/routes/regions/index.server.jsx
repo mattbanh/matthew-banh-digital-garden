@@ -1,3 +1,5 @@
+// View all regions
+
 import {Suspense} from 'react';
 import {
   useShopQuery,
@@ -16,12 +18,14 @@ export default function Collections() {
   return (
     <Layout>
       <Seo type="page" data={{title: 'All Collections'}} />
-      <PageHeader heading="Collections" />
-      <Section>
-        <Suspense>
-          <CollectionGrid />
-        </Suspense>
-      </Section>
+      <div className="bg-garden-cream">
+        <PageHeader heading="Regions" />
+        <Section>
+          <Suspense>
+            <CollectionGrid />
+          </Suspense>
+        </Section>
+      </div>
     </Layout>
   );
 }
