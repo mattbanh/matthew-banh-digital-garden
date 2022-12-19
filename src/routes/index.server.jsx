@@ -1,27 +1,28 @@
+// HOMEPAGE
+// Hydrogen allows building templates that can be added as a Shopify app
+// because this is a one-off project, this project will not query for everything
+// from the Shopify backend but rather be treated as a custom React project
+
+// Suspense is a feature from React 18 which improves performance of server-side rendering
+// (SSR). As can be seen in the code below, we use JSX on the server side! This allows
+// the GraphQL queries and any other API requests to be separated from the client-side,
+// protecting the data.
 import {Suspense} from 'react';
+import {CacheLong, gql, Seo, useShopQuery} from '@shopify/hydrogen';
+
+// Components brought in from components folder
+import {Layout} from '~/components/index.server';
 import {
-  CacheLong,
-  gql,
-  Seo,
-  ShopifyAnalyticsConstants,
-  useServerAnalytics,
-  useLocalization,
-  useShopQuery,
-} from '@shopify/hydrogen';
+  Section,
+  ShopByRegion,
+  HomepageAbout,
+  HomepageCommunity,
+  HomepageHero,
+  HomepageFeaturedProducts,
+} from '../components/index';
 
-import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/lib/fragments';
-import {getHeroPlaceholder} from '~/lib/placeholders';
-import {FeaturedCollections, Hero} from '~/components';
-import {Layout, ProductSwimlane} from '~/components/index.server';
-
+// Written to keep elements as componentized as possible.
 export default function Homepage() {
-  useServerAnalytics({
-    shopify: {
-      canonicalPath: '/',
-      pageType: ShopifyAnalyticsConstants.pageType.home,
-    },
-  });
-
   return (
     <Layout>
       <Suspense>
@@ -34,48 +35,43 @@ export default function Homepage() {
   );
 }
 
+// Homepage content
 function HomepageContent() {
-  const {
-    language: {isoCode: languageCode},
-    country: {isoCode: countryCode},
-  } = useLocalization();
-
+  const featuredTop = 'Produce';
+  const featuredBottom = 'Kitchenware';
+  const featuredCollection = 'all';
   const {data} = useShopQuery({
-    query: HOMEPAGE_CONTENT_QUERY,
+    query: FEATURED_PRODUCTS,
     variables: {
-      language: languageCode,
-      country: countryCode,
+      featuredTop,
+      featuredBottom,
+      featuredCollection,
     },
     preload: true,
   });
 
-  const {heroBanners, featuredCollections, featuredProducts} = data;
-
-  // fill in the hero banners with placeholders if they're missing
-  const [primaryHero, secondaryHero, tertiaryHero] = getHeroPlaceholder(
-    heroBanners.nodes,
-  );
-
   return (
     <>
-      {primaryHero && (
-        <Hero {...primaryHero} height="full" top loading="eager" />
-      )}
-      <ProductSwimlane
-        data={featuredProducts.nodes}
-        title="Featured Products"
-        divider="bottom"
-      />
-      {secondaryHero && <Hero {...secondaryHero} />}
-      <FeaturedCollections
-        data={featuredCollections.nodes}
-        title="Collections"
-      />
-      {tertiaryHero && <Hero {...tertiaryHero} />}
+      <HomepageHero />
+      <Section className="bg-garden-teal min-h-[75vh]">
+        <ShopByRegion />
+      </Section>
+      <Section className="bg-garden-cream min-h-[75vh] flex justify-center items-center md:py-64 rounded-tl-[60px] md:rounded-tl-[120px] lg:rounded-tl-[160px] xl:rounded-tl-[200px]-mt-[200px] md:min-h-[1920px] -mt-[240px] ">
+        <HomepageFeaturedProducts
+          data={data}
+          featuredTop={featuredTop}
+          featuredBottom={featuredBottom}
+        />
+      </Section>
+      <Section className="bg-garden-green  pb-[200px] md:pb-[240px] lg:pb-[320px] rounded-tr-[60px] md:rounded-tr-[120px] lg:rounded-tr-[160px] xl:rounded-tr-[200px] -mt-[240px] ">
+        <HomepageAbout />
+      </Section>
+      <HomepageCommunity />
     </>
   );
 }
 
+// SEO provided by Shopify
 function SeoForHomepage() {
   const {
     data: {
@@ -99,76 +95,68 @@ function SeoForHomepage() {
   );
 }
 
-/**
- * The homepage content query includes a request for custom metafields inside the alias
- * `heroBanners`. The template loads placeholder content if these metafields don't
- * exist. Define the following five custom metafields on your Shopify store to override placeholders:
- * - hero.title             Single line text
- * - hero.byline            Single line text
- * - hero.cta               Single line text
- * - hero.spread            File
- * - hero.spread_secondary  File
- *
- * @see https://help.shopify.com/manual/metafields/metafield-definitions/creating-custom-metafield-definitions
- * @see https://github.com/Shopify/hydrogen/discussions/1790
- */
-
-const HOMEPAGE_CONTENT_QUERY = gql`
-  ${MEDIA_FRAGMENT}
-  ${PRODUCT_CARD_FRAGMENT}
-  query homepage($country: CountryCode, $language: LanguageCode)
-  @inContext(country: $country, language: $language) {
-    heroBanners: collections(
-      first: 3
-      query: "collection_type:custom"
-      sortKey: UPDATED_AT
-    ) {
-      nodes {
-        id
-        handle
-        title
-        descriptionHtml
-        heading: metafield(namespace: "hero", key: "title") {
-          value
-        }
-        byline: metafield(namespace: "hero", key: "byline") {
-          value
-        }
-        cta: metafield(namespace: "hero", key: "cta") {
-          value
-        }
-        spread: metafield(namespace: "hero", key: "spread") {
-          reference {
-            ...Media
-          }
-        }
-        spreadSecondary: metafield(namespace: "hero", key: "spread_secondary") {
-          reference {
-            ...Media
+// ABOUT GRAPHQL QUERIES
+// gql is a utility that adds syntax highlighting to GraphQL queries
+// following is {operation type} {operation name}
+// operation type is any of the following:
+// - query(read), mutation(create, update, delete), or subscription (long-lasting read which allows real time updates)
+// operation name is not required unless there are multiple operations, however it is best practice to include it
+const FEATURED_PRODUCTS = gql`
+  query featuredProducts(
+    $featuredCollection: String!
+    $featuredTop: String!
+    $featuredBottom: String!
+  ) {
+    topFeature: collection(handle: $featuredCollection) {
+      products(first: 3, filters: {productType: $featuredTop}) {
+        nodes {
+          id
+          title
+          handle
+          variants(first: 1) {
+            nodes {
+              id
+              image {
+                url
+                altText
+              }
+              priceV2 {
+                amount
+                currencyCode
+              }
+              compareAtPriceV2 {
+                amount
+                currencyCode
+              }
+            }
           }
         }
       }
     }
-    featuredCollections: collections(
-      first: 3
-      query: "collection_type:smart"
-      sortKey: UPDATED_AT
-    ) {
-      nodes {
-        id
-        title
-        handle
-        image {
-          altText
-          width
-          height
-          url
+    bottomFeature: collection(handle: $featuredCollection) {
+      products(first: 3, filters: {productType: $featuredBottom}) {
+        nodes {
+          id
+          title
+          handle
+          variants(first: 1) {
+            nodes {
+              id
+              image {
+                url
+                altText
+              }
+              priceV2 {
+                amount
+                currencyCode
+              }
+              compareAtPriceV2 {
+                amount
+                currencyCode
+              }
+            }
+          }
         }
-      }
-    }
-    featuredProducts: products(first: 12) {
-      nodes {
-        ...ProductCard
       }
     }
   }

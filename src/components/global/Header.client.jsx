@@ -1,14 +1,13 @@
-import {Link, useUrl, useCart} from '@shopify/hydrogen';
+// HEADER COMPONENT
+// the header component has pre-built parts
+// TO-DO: remove dependency of Shopify API queries and customize
+// TO-KEEP: cart! account! mobile version of header!
+
+import {Image, Link, useUrl, useCart} from '@shopify/hydrogen';
 import {useWindowScroll} from 'react-use';
 
-import {
-  Heading,
-  IconAccount,
-  IconBag,
-  IconMenu,
-  IconSearch,
-  Input,
-} from '~/components';
+import {IconAccount, IconBag, IconMenu, IconSearch, Input} from '~/components';
+import logo from '../../assets/images/logo/logo.png';
 
 import {CartDrawer} from './CartDrawer.client';
 import {MenuDrawer} from './MenuDrawer.client';
@@ -17,10 +16,12 @@ import {useDrawer} from './Drawer.client';
 /**
  * A client component that specifies the content of the header on the website
  */
+
 export function Header({title, menu}) {
   const {pathname} = useUrl();
 
   const localeMatch = /^\/([a-z]{2})(\/|$)/i.exec(pathname);
+
   const countryCode = localeMatch ? localeMatch[1] : undefined;
 
   const isHome = pathname === `/${countryCode ? countryCode + '/' : ''}`;
@@ -59,18 +60,14 @@ export function Header({title, menu}) {
   );
 }
 
-function MobileHeader({countryCode, title, isHome, openCart, openMenu}) {
+function MobileHeader({countryCode, isHome, openCart, openMenu}) {
   const {y} = useWindowScroll();
 
   const styles = {
     button: 'relative flex items-center justify-center w-8 h-8',
-    container: `${
-      isHome
-        ? 'bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader'
-        : 'bg-contrast/80 text-primary'
-    } ${
+    container: `${'bg-contrast/80 text-primary'} ${
       y > 50 && !isHome ? 'shadow-lightHeader ' : ''
-    }flex lg:hidden items-center h-nav sticky backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-4 px-4 md:px-8`,
+    }flex lg:hidden items-center h-nav sticky backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-4 px-4 md:px-8 py-8`,
   };
 
   return (
@@ -101,12 +98,15 @@ function MobileHeader({countryCode, title, isHome, openCart, openMenu}) {
       </div>
 
       <Link
-        className="flex items-center self-stretch leading-[3rem] md:leading-[4rem] justify-center flex-grow w-full h-full"
+        className="flex items-center md:leading-[4rem] justify-center flex-grow w-full h-full"
         to="/"
       >
-        <Heading className="font-bold text-center" as={isHome ? 'h1' : 'h2'}>
-          {title}
-        </Heading>
+        <Image
+          src={logo}
+          width={120}
+          height={50}
+          alt="digital garden header logo"
+        />
       </Link>
 
       <div className="flex items-center justify-end w-full gap-4">
@@ -122,36 +122,41 @@ function MobileHeader({countryCode, title, isHome, openCart, openMenu}) {
   );
 }
 
-function DesktopHeader({countryCode, isHome, menu, openCart, title}) {
+function DesktopHeader({countryCode, isHome, menu, openCart}) {
   const {y} = useWindowScroll();
 
   const styles = {
     button:
       'relative flex items-center justify-center w-8 h-8 focus:ring-primary/5',
-    container: `${
-      isHome
-        ? 'bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader'
-        : 'bg-contrast/80 text-primary'
-    } ${
+    container: `${'bg-contrast/80 text-primaryflex justify-between'} ${
       y > 50 && !isHome ? 'shadow-lightHeader ' : ''
     }hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-8 px-12 py-8`,
   };
 
   return (
     <header role="banner" className={styles.container}>
-      <div className="flex gap-12">
-        <Link className={`font-bold`} to="/">
-          {title}
-        </Link>
-        <nav className="flex gap-8">
-          {/* Top level menu items */}
-          {(menu?.items || []).map((item) => (
-            <Link key={item.id} to={item.to} target={item.target}>
-              {item.title}
-            </Link>
-          ))}
-        </nav>
-      </div>
+      <Link className={`font-bold min-w-[285px]`} to="/">
+        <Image
+          src={logo}
+          width={140}
+          height={60}
+          alt="digital garden header logo"
+        />
+      </Link>
+      <nav className="flex items-center">
+        {/* Top level menu items */}
+        {(menu?.items || []).map((item) => (
+          <Link
+            className="mx-5"
+            key={item.id}
+            to={item.to}
+            target={item.target}
+          >
+            {item.title}
+          </Link>
+        ))}
+      </nav>
+
       <div className="flex items-center gap-1">
         <form
           action={`/${countryCode ? countryCode + '/' : ''}search`}

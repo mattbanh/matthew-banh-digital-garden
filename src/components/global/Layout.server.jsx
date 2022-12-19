@@ -1,3 +1,7 @@
+// GLOBAL LAYOUT FOR WEBSITE
+// adds header and footer to every page with min-height 100vh
+// every page will have components wrapped with <Layout>
+
 import {Suspense} from 'react';
 import {useLocalization, useShopQuery, CacheLong, gql} from '@shopify/hydrogen';
 
@@ -8,7 +12,7 @@ import {parseMenu} from '~/lib/utils';
 const HEADER_MENU_HANDLE = 'main-menu';
 const FOOTER_MENU_HANDLE = 'footer';
 
-const SHOP_NAME_FALLBACK = 'Hydrogen';
+const SHOP_NAME_FALLBACK = 'Digital Garden';
 
 /**
  * A server component that defines a structure and organization of a page that can be used in different parts of the Hydrogen app
@@ -22,7 +26,7 @@ export function Layout({children}) {
             Skip to content
           </a>
         </div>
-        <Suspense fallback={<Header title={SHOP_NAME_FALLBACK} />}>
+        <Suspense>
           <HeaderWithMenu />
         </Suspense>
         <main role="main" id="mainContent" className="flex-grow">
@@ -37,8 +41,8 @@ export function Layout({children}) {
 }
 
 function HeaderWithMenu() {
-  const {shopName, headerMenu} = useLayoutQuery();
-  return <Header title={shopName} menu={headerMenu} />;
+  const {headerMenu} = useLayoutQuery();
+  return <Header title="Digital Garden" menu={headerMenu} />;
 }
 
 function FooterWithMenu() {
@@ -85,6 +89,7 @@ function useLayoutQuery() {
   return {footerMenu, headerMenu, shopName};
 }
 
+// queries MenuItem from connected shopify shop
 const SHOP_QUERY = gql`
   fragment MenuItem on MenuItem {
     id

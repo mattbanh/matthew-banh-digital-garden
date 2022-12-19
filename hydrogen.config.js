@@ -1,3 +1,5 @@
+// The config file is where your storefront is loaded in to Hydrogen
+
 import {defineConfig, CookieSessionStorage} from '@shopify/hydrogen/config';
 
 export default defineConfig({

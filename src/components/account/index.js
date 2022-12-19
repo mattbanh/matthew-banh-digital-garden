@@ -1,3 +1,6 @@
+// The account components were created using the Shopify demo (boilerplate)
+// Minimal styling or logic was added by me.
+
 export {AccountActivateForm} from './AccountActivateForm.client';
 export {AccountAddressBook} from './AccountAddressBook.client';
 export {AccountAddressEdit} from './AccountAddressEdit.client';

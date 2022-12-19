@@ -3,19 +3,23 @@ import {useShopQuery, gql, useLocalization, Seo} from '@shopify/hydrogen';
 
 import {PRODUCT_CARD_FRAGMENT} from '~/lib/fragments';
 import {PAGINATION_SIZE} from '~/lib/const';
-import {ProductGrid, PageHeader, Section} from '~/components';
+import {ProductGrid, Section} from '~/components';
 import {Layout} from '~/components/index.server';
 
 export default function AllProducts() {
   return (
     <Layout>
       <Seo type="page" data={{title: 'All Products'}} />
-      <PageHeader heading="All Products" variant="allCollections" />
-      <Section>
-        <Suspense>
-          <AllProductsGrid />
-        </Suspense>
-      </Section>
+      <div className="bg-garden-cream">
+        <Section className="bg-garden-cream max-w-[1440px]">
+          <Suspense>
+            <h1 className="text-3xl text-garden-grey font-bold my-8 md:text-4xl">
+              Shop All
+            </h1>
+            <AllProductsGrid />
+          </Suspense>
+        </Section>
+      </div>
     </Layout>
   );
 }
@@ -40,6 +44,7 @@ function AllProductsGrid() {
 
   return (
     <ProductGrid
+      className=" max-w-[1440px]"
       key="products"
       url={`/products?country=${countryCode}`}
       collection={{products}}
@@ -62,6 +67,10 @@ export async function api(request, {params, queryShop}) {
   const country = url.searchParams.get('country');
   const {handle} = params;
 
+  // function that helps you query Storefront API within API routes
+  // API route version of useShopQuery
+  // Accepts single argument object with following properties:
+  // query*, variables, locale
   return await queryShop({
     query: PAGINATE_ALL_PRODUCTS_QUERY,
     variables: {

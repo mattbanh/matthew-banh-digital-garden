@@ -33,7 +33,7 @@ export function Section({
   };
 
   const styles = clsx(
-    'w-full gap-4 md:gap-8',
+    'gap-4 mx-auto md:gap-8',
     displays[display],
     missingClass(className, '\\mp[xy]?-') && paddings[padding],
     dividers[divider],

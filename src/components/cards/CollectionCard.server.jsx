@@ -2,9 +2,9 @@ import {Image, Link} from '@shopify/hydrogen';
 
 import {Heading} from '~/components';
 
-export function CollectionCard({collection, loading}) {
+export function CollectionCard({collection}) {
   return (
-    <Link to={`/collections/${collection.handle}`} className="grid gap-4">
+    <Link to={`/regions/${collection.handle}`} className="grid gap-4">
       <div className="card-image bg-primary/5 aspect-[3/2]">
         {collection?.image && (
           <Image
