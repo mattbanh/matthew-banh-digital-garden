@@ -47,5 +47,5 @@ $ npm run dev
 
 5. Sign up or log in
    <br><br>To gain full access to functionality (ie. vendor dashboard) you will need to be logged in. Please create an account and then log in.
-
+   
 **_Please contact me if you would like to access a pre-made account_**
