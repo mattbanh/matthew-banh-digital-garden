@@ -7,7 +7,7 @@ import {Section} from '../index';
 export function HomepageHero() {
   return (
     <div
-      className="bg-fixed bg-cover min-h-[720px] md:min-h-[1280px] flex items-center"
+      className=" bg-cover min-h-[600px] md:min-h-[1280px] flex items-center"
       style={{backgroundImage: `url(${heroImg})`}}
     >
       <Section>
